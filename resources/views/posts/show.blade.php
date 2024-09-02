@@ -14,7 +14,8 @@
             <p class="card-text" ><strong>unKnown</strong></p>
         @endif --}}
 
-        <h6>Posted By: {{ $post->author ? $post->author->name : 'Not Known' }}</h6>
+        {{-- <h6>Posted By: {{ $post->author ? $post->author->name : 'Not Known' }}</h6> --}}
+        <h6><strong> Created By: {{ $post->creator ? $post->creator->name : 'unknown' }}</strong></h6>
         <p class="card-text">Created_at: {{$post->created_at}}</p>
         <p class="card-text">Updated_at: {{$post->updated_at}}</p>
         <a href="{{route("posts.index")}}" class="btn btn-primary">View All Posts</a>

@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 class postController extends Controller
@@ -53,6 +54,8 @@ class postController extends Controller
         }
         $request_data= $request->validated();
         $request_data['image']=$image_path; # replace image object with image_uploaded path
+        $request_data['creator_id']= Auth::id();  #id of logged in user
+        // dd($request_data);
 
         //save data to DB using mass assignment
         $post = Post::create($request_data);

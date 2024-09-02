@@ -16,16 +16,20 @@ class Post extends Model
         'author_id',
         'description',
         'createdAt',
-        'image'
+        'image',
+        'creator_id'
     ];
 
     # relation Author
-    function author(){ # define track property
+    function author(){ # define author property
         return $this->belongsTo(Author::class);
-        # select * from tracks where id = $this->track_id;
-        ## relation --> with track object
+        ## relation --> with author object
     }
 
+    function creator(){ # define creator property
+        return $this->belongsTo(User::class);
+        ## relation --> with creator object
+    }
 
     use SoftDeletes;
     protected $dates = ['deleted_at'];
