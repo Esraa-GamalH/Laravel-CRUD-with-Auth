@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('container')
+@section('content')
     <h1 class="text-success text-center">Add New Author</h1>
 
     <form class="w-50 m-auto mt-5" action="{{route("authors.store")}}" method="POST" enctype="multipart/form-data">

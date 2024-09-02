@@ -18,7 +18,7 @@ class postController extends Controller
      */
     public function index(Request $request)
     {
-        // $posts = Post::all();
+        $posts = Post::all();
         $showTrashed = $request->has('trashed');
 
         if ($showTrashed) {
@@ -28,6 +28,7 @@ class postController extends Controller
         }
 
         return view('posts.index', compact('posts', 'showTrashed'));
+        dd('Index route hit');
     }
 
     /**
@@ -120,6 +121,12 @@ class postController extends Controller
         $post = Post::onlyTrashed()->findOrFail($id);
         $post->restore();
         return redirect()->route('posts.index')->with('success', 'Post restored successfully');
+    }
+
+
+    function __construct()
+    {
+        $this->middleware("auth")->only("store");
     }
 
 

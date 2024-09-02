@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('container')
+@section('content')
 <div class="card mt-5 w-50 m-auto">
     <h5 class="card-header bg-primary text-white">author Info</h5>
     <div class="card-body bg-primary-subtle">

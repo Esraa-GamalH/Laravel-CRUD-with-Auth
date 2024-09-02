@@ -23,3 +23,7 @@ Route::post('/posts/{id}/restore', [PostController::class, 'restore'])->name('po
 use App\Http\Controllers\AuthorController;
 
 Route::resource('authors', AuthorController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('container')
+@section('content')
 
 
     <table class="table table-success table-striped mt-5 w-75 m-auto text-center">

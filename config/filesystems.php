@@ -62,6 +62,13 @@ return [
             'url' => env('APP_URL').'/public',
             'throw' => false,
         ],
+        "users_avatars"=>[
+            "driver" => "local",
+            'root' => public_path('images/users'),
+            'visibility' => 'public',
+            'url' => env('APP_URL').'/public',
+            'throw' => false,
+        ]
 
     ],
 

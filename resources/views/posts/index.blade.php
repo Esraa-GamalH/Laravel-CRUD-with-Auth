@@ -1,18 +1,24 @@
 @extends('layouts.app')
 
-@section('container')
+@section('content')
     @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     <!-- Toggle between all posts and trashed posts -->
-    <div class="mb-3">
-        @if($showTrashed)
-            <a href="{{ route('posts.index') }}" class="btn btn-primary mt-3">View All Posts</a>
-        @else
-            <a href="{{ route('posts.index', ['trashed' => true]) }}" class="btn btn-warning mt-3">View Trashed Posts</a>
-        @endif
+    <div class="row text-center">
+        <div class="mb-3 col-6">
+            <a href="{{ route('posts.create') }}" class="btn btn-primary mt-3">Create new Post</a>
+        </div>
+        <div class="mb-3 col-6">
+            @if($showTrashed)
+                <a href="{{ route('posts.index') }}" class="btn btn-primary mt-3">View All Posts</a>
+            @else
+                <a href="{{ route('posts.index', ['trashed' => true]) }}" class="btn btn-warning mt-3">View Trashed Posts</a>
+            @endif
+        </div>
     </div>
+
 
     <table class="table table-success table-striped mt-5 m-auto text-center">
         <tr>
