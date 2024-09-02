@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Rules\MaxPostsForUser;
 
 class StorePostRequest extends FormRequest
 {
@@ -31,6 +32,7 @@ class StorePostRequest extends FormRequest
                 'exists:authors,id', // Ensure the author exists in the database
             ],
             'createdAt' => 'required|date',
+            new MaxPostsForUser,
         ];
     }
 

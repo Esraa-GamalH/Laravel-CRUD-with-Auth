@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
 
 
 class postController extends Controller
@@ -46,17 +48,22 @@ class postController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-    # save image  --> inside public path
+        $request_data = $request->except('slug'); // Execlde slug from request data
+
+        $request_data = $request->validated();
+
+        $request_data['creator_id'] = Auth::id();
+        
+        # save image  --> inside public path
         $image_path= null;
         if($request->hasFile('image')){
             $image = $request->file('image');
             $image_path=$image->store("", 'posts_images');
         }
-        $request_data= $request->validated();
-        $request_data['image']=$image_path; # replace image object with image_uploaded path
-        $request_data['creator_id']= Auth::id();  #id of logged in user
-        // dd($request_data);
 
+        $request_data['image'] = $image_path; # replace image object with image_uploaded path
+        // dd($request_data);
+        
         //save data to DB using mass assignment
         $post = Post::create($request_data);
         return to_route('posts.show', $post);
@@ -88,6 +95,7 @@ class postController extends Controller
     public function update(UpdatePostRequest $request, Post $post)
     {
         //
+        $request_data = $request->except('slug');
         
         $image_path= $post->image;
 
@@ -110,12 +118,13 @@ class postController extends Controller
      */
     public function destroy(Post $post)
     {
-
-        // Delete the image when post is deleted
-        // if ($post->image) {
-        //     Storage::disk('posts_images')->delete($post->image);
+        // if (! Gate::allows('delete-post', $post)) {
+        //     abort(403);
         // }
-        //
+
+        // if (! Auth::user()->can('delete-post', $post)){
+        //     abort(403);
+        // }
         $post->delete();
         return to_route('posts.index')->with('success', 'post deleted successfully');
     }

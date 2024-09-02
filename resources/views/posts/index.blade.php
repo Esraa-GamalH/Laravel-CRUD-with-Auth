@@ -23,12 +23,13 @@
     <table class="table table-success table-striped mt-5 m-auto text-center">
         <tr>
             <th>Id</th>
-            <th>Title</th>
+            <th class="w-25">Title</th>
+            <th>Slug</th>
             <th>Posted By</th>
             <th>Created At</th>
             <th>Image</th>
-            <th>Actions</th>
-            <th>Delete</th>
+            <th style="width: 200px">Actions</th>
+            <th style="width: 200px">Delete</th>
             @if($showTrashed)
                 <th>Restore</th>
             @endif
@@ -37,8 +38,9 @@
             <tr>
                 <td>{{ $post->id }}</td>
                 <td>{{ $post->title }}</td>
+                <td>{{ $post->slug }}</td>
                 <td>{{ $post->author->name }}</td>
-                <td>{{ $post->created_at }}</td>
+                <td>{{ $post->human_readable_date }}</td>
                 <td>
                     @if($post->image)
                         <img src="{{ asset('images/posts/images/' . $post->image) }}" width="100" height="100" alt="Post Image">
@@ -50,13 +52,21 @@
                     <a href="{{ route('posts.show', $post) }}" class="btn btn-info">View</a>
                     <a href="{{ route('posts.edit', $post) }}" class="btn btn-primary">Edit</a>
                 </td>
+
                 <td>
+                @can('delete-post', $post)
+                
                     <form action="{{ route('posts.destroy', $post) }}" method="POST" onsubmit="return confirmDelete()">
                         @csrf
                         @method('DELETE')
                         <input type="submit" class="btn btn-danger" value="Delete">
                     </form>
+
+                @else
+                <span><strong class="text-danger">You are not allowed to delete this post</strong></span>
+                @endcan
                 </td>
+
                 @if($showTrashed)
                     <td>
                         <form action="{{ route('posts.restore', $post->id) }}" method="POST">

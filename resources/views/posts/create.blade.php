@@ -14,6 +14,10 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="slug" class="form-label">Slug</label>
+            <input type="text" class="form-control" id="slug" name="slug" value="{{ old('slug') }}">
+        </div>
+        <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" rows="3" name="description" > {{old('description')}} </textarea>
             @error('description')
